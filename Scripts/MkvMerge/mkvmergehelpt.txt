@@ -1,0 +1,343 @@
+mkvmerge v75.0.0 ('Goliath') 64-bit
+Error: no destination file name was given.
+
+mkvmerge -o out [global options] [options1] <file1> [@option-file.json] ΓÇª
+
+ Global options:
+  -v, --verbose            Increase verbosity.
+  -q, --quiet              Suppress status output.
+  -o, --output out         Write to the file 'out'.
+  -w, --webm               Create WebM compliant file.
+  --title <title>          Title for this destination file.
+  --global-tags <file>     Read global tags from an XML file.
+
+ Chapter handling:
+  --chapters <file>        Read chapter information from the file.
+  --chapter-language <lng> Set the 'language' element in chapter entries.
+  --chapter-charset <cset> Charset for a simple chapter file.
+  --chapter-sync <d[,o[/p]]>
+                           Synchronize, adjust the chapters's timestamps
+                           by 'd' ms.
+                           'o/p': Adjust the timestamps by multiplying with
+                           'o/p' to fix linear drifts. 'p' defaults to
+                           1 if omitted. Both 'o' and 'p' can be
+                           floating point numbers.
+  --cue-chapter-name-format <format>
+                           Pattern for the conversion from cue sheet
+                           entries to chapter names.
+  --default-language <lng> Use this language for all tracks unless
+                           overridden with the --language option.
+  --generate-chapters <mode>
+                           Automatically generate chapters according to
+                           the mode ('when-appending' or 'interval:<duration>').
+  --generate-chapters-name-template <template>
+                           Template for newly generated chapter names
+                           (default: 'Chapter <NUM:2>').
+
+ Segment info handling:
+  --segmentinfo <file>     Read segment information from the file.
+  --segment-uid <SID1,[SID2...]>
+                           Set the segment UIDs to SID1, SID2 etc.
+
+ General output control (advanced global options):
+  --track-order <FileID1:TID1,FileID2:TID2,FileID3:TID3,...>
+                           A comma separated list of both file IDs
+                           and track IDs that controls the order of the
+                           tracks in the destination file.
+  --cluster-length <n[ms]> Put at most n data blocks into each cluster.
+                           If the number is postfixed with 'ms' then
+                           put at most n milliseconds of data into each
+                           cluster.
+  --clusters-in-meta-seek  Write meta seek data for clusters.
+  --timestamp-scale <n>    Force the timestamp scale factor to n.
+  --enable-durations       Enable block durations for all blocks.
+  --no-cues                Do not write the cue data (the index).
+  --no-date                Do not write the 'date' field in the segment
+                           information headers.
+  --disable-lacing         Do not use lacing.
+  --disable-track-statistics-tags
+                           Do not write tags with track statistics.
+  --disable-language-ietf  Do not write IETF BCP 47 language elements in
+                           track headers, chapters and tags.
+  --normalize-language-ietf <canonical|extlang|off>
+                           Normalize all IETF BCP 47 language tags to either
+                           their canonical or their extended language subtags
+                           form or not at all (default: canonical form).
+
+ File splitting, linking, appending and concatenating (more global options):
+  --split <d[K,M,G]|HH:MM:SS|s>
+                           Create a new file after d bytes (KB, MB, GB)
+                           or after a specific time.
+  --split timestamps:A[,B...]
+                           Create a new file after each timestamp A, B
+                           etc.
+  --split parts:start1-end1[,[+]start2-end2,...]
+                           Keep ranges of timestamps start-end, either in
+                           separate files or append to previous range's file
+                           if prefixed with '+'.
+  --split parts-frames:start1-end1[,[+]start2-end2,...]
+                           Same as 'parts:', but 'startN'/'endN' are frame/
+                           field numbers instead of timestamps.
+  --split frames:A[,B...]
+                           Create a new file after each frame/field A, B
+                           etc.
+  --split chapters:all|A[,B...]
+                           Create a new file before each chapter (with 'all')
+                           or before chapter numbers A, B etc.
+  --split-max-files <n>    Create at most n files.
+  --link                   Link splitted files.
+  --link-to-previous <SID> Link the first file to the given SID.
+  --link-to-next <SID>     Link the last file to the given SID.
+  --append-to <SFID1:STID1:DFID1:DTID1,SFID2:STID2:DFID2:DTID2,...>
+                           A comma separated list of file and track IDs
+                           that controls which track of a file is
+                           appended to another track of the preceding
+                           file.
+  --append-mode <file|track>
+                           Selects how mkvmerge calculates timestamps when
+                           appending files.
+  <file1> + <file2>        Append file2 to file1.
+  <file1> +<file2>         Same as "<file1> + <file2>".
+  [ <file1> <file2> ]      Same as "<file1> + <file2>".
+  = <file>                 Don't look for and concatenate files with the same
+                           base name but with a different trailing number.
+  =<file>                  Same as "= <file>".
+  ( <file1> <file2> )      Treat file1 and file2 as if they were concatenated
+                           into a single big file.
+
+ Attachment support (more global options):
+  --attachment-description <desc>
+                           Description for the following attachment.
+  --attachment-mime-type <mime type>
+                           Mime type for the following attachment.
+  --attachment-name <name> The name should be stored for the 
+                           following attachment.
+  --attach-file <file>     Creates a file attachment inside the
+                           Matroska file.
+  --attach-file-once <file>
+                           Creates a file attachment inside the
+                           first Matroska file written.
+  --enable-legacy-font-mime-types
+                           Use legacy font MIME types when adding new
+                           attachments as well as for existing ones.
+
+ Options for each source file:
+  -a, --audio-tracks <n,m,...>
+                           Copy audio tracks n,m etc. Default: copy all
+                           audio tracks.
+  -A, --no-audio           Don't copy any audio track from this file.
+  -d, --video-tracks <n,m,...>
+                           Copy video tracks n,m etc. Default: copy all
+                           video tracks.
+  -D, --no-video           Don't copy any video track from this file.
+  -s, --subtitle-tracks <n,m,...>
+                           Copy subtitle tracks n,m etc. Default: copy
+                           all subtitle tracks.
+  -S, --no-subtitles       Don't copy any subtitle track from this file.
+  -b, --button-tracks <n,m,...>
+                           Copy buttons tracks n,m etc. Default: copy
+                           all buttons tracks.
+  -B, --no-buttons         Don't copy any buttons track from this file.
+  -m, --attachments <n[:all|first],m[:all|first],...>
+                           Copy the attachments with the IDs n, m etc. to
+                           all or only the first destination file. Default:
+                           copy all attachments to all destination files.
+  -M, --no-attachments     Don't copy attachments from a source file.
+  -t, --tags <TID:file>    Read tags for the track from an XML file.
+  --track-tags <n,m,...>   Copy the tags for tracks n,m etc. Default: copy
+                           tags for all tracks.
+  -T, --no-track-tags      Don't copy tags for tracks from the source file.
+  --no-global-tags         Don't keep global tags from the source file.
+  --no-chapters            Don't keep chapters from the source file.
+  -y, --sync <TID:d[,o[/p]]>
+                           Synchronize, adjust the track's timestamps with
+                           the id TID by 'd' ms.
+                           'o/p': Adjust the timestamps by multiplying with
+                           'o/p' to fix linear drifts. 'p' defaults to
+                           1 if omitted. Both 'o' and 'p' can be
+                           floating point numbers.
+  --default-track-flag <TID[:bool]>
+                           Sets the "default track" flag for this track or
+                           forces it not to be present if bool is 0.
+  --forced-display-flag <TID[:bool]>
+                           Sets the "forced display" flag for this track or
+                           forces it not to be present if bool is 0.
+  --track-enabled-flag <TID[:bool]>
+                           Sets the "track enabled" flag for this track or
+                           forces it not to be present if bool is 0.
+  --hearing-impaired-flag <TID[:bool]>
+                           Sets the "hearing impaired" flag for this track or
+                           forces it not to be present if bool is 0.
+  --visual-impaired-flag <TID[:bool]>
+                           Sets the "visual impaired" flag for this track or
+                           forces it not to be present if bool is 0.
+  --text-descriptions-flag <TID[:bool]>
+                           Sets the "text descriptions" flag for this track
+                           or forces it not to be present if bool is 0.
+  --original-flag <TID[:bool]>
+                           Sets the "original language" flag for this track or
+                           forces it not to be present if bool is 0.
+  --commentary-flag <TID[:bool]>
+                           Sets the "commentary" flag for this track or
+                           forces it not to be present if bool is 0.
+  --blockadd <TID:x>       Sets the max number of block additional
+                           levels for this track.
+  --track-name <TID:name>  Sets the name for a track.
+  --cues <TID:none|iframes|all>
+                           Create cue (index) entries for this track:
+                           None at all, only for I frames, for all.
+  --language <TID:lang>    Sets the language for the track (IETF BCP 47/
+                           RFC 5646 language tag).
+  --timestamps <TID:file>  Read the timestamps to be used from a file.
+  --default-duration <TID:Xs|ms|us|ns|fps>
+                           Force the default duration of a track to X.
+                           X can be a floating point number or a fraction.
+
+ Options that only apply to audio tracks:
+  --aac-is-sbr <TID[:0|1]> The track with the ID is HE-AAC/AAC+/SBR-AAC
+                           or not. The value ':1' can be omitted.
+  --reduce-to-core <TID>   Keeps only the core of audio tracks that support
+                           HD extensions instead of copying both the core
+                           and the extensions.
+  --remove-dialog-normalization-gain <TID>
+                           Removes or minimizes the dialog normalization gain
+                           by modifying audio frame headers.
+  --audio-emphasis <TID:n|keyword>
+                           Sets the audio emphasis track header value. It can
+                           be either a number or a keyword (see
+                           '--list-audio-emphasis' for the full list).
+
+ Options that only apply to video tracks:
+  --fix-bitstream-timing-information <TID[:bool]>
+                           Adjust the frame/field rate stored in the video
+                           bitstream to match the track's default duration.
+  -f, --fourcc <FOURCC>    Forces the FourCC to the specified value.
+                           Works only for video tracks.
+  --aspect-ratio <TID:f|a/b>
+                           Sets the display dimensions by calculating
+                           width and height for this aspect ratio.
+  --aspect-ratio-factor <TID:f|a/b>
+                           First calculates the aspect ratio by multi-
+                           plying the video's original aspect ratio
+                           with this factor and calculates the display
+                           dimensions from this factor.
+  --display-dimensions <TID:width>x<height>
+                           Explicitly set the display dimensions.
+  --cropping <TID:left,top,right,bottom>
+                           Sets the cropping parameters.
+  --field-order <TID:n>    Sets the video field order parameter
+                           (see documentation for valid values).
+  --stereo-mode <TID:n|keyword>
+                           Sets the stereo mode parameter. It can
+                           either be a number 0 - 14 or a keyword
+                           (use '--list-stereo-modes' to see the full list).
+  --color-matrix-coefficients <TID:n>
+                           Sets the matrix coefficients of the video used
+                           to derive luma and chroma values from red, green
+                           and blue color primaries.
+  --color-bits-per-channel <TID:n>
+                           Sets the number of coded bits for a color 
+                           channel. A value of 0 indicates that the number is
+                           unspecified.
+  --chroma-subsample <TID:hori,vert>
+                           The amount of pixels to remove in the Cr and Cb
+                           channels for every pixel not removed horizontally
+                           and vertically.
+  --cb-subsample <TID:hori,vert>
+                           The amount of pixels to remove in the Cb channel
+                           for every pixel not removed horizontally and
+                           vertically. This is additive with
+                           --chroma-subsample.
+  --chroma-siting <TID:hori,vert>
+                            How chroma is sited horizontally/vertically.
+  --color-range <TID:n>   Clipping of the color ranges.
+  --color-transfer-characteristics <TID:n>
+                           The transfer characteristics of the video.
+  --color-primaries <TID:n>
+                           The color primaries of the video.
+  --max-content-light <TID:n>
+                           Maximum brightness of a single pixel in candelas
+                           per square meter (cd/m┬▓).
+  --max-frame-light <TID:n>
+                           Maximum frame-average light level in candelas per
+                           square meter (cd/m┬▓).
+  --chromaticity-coordinates <TID:red-x,red-y,green-x,green-y,blue-x,blue-y>
+                           Red/Green/Blue chromaticity coordinates as defined
+                           by CIE 1931.
+  --white-color-coordinates <TID:x,y>
+                           White color chromaticity coordinates as defined
+                           by CIE 1931.
+  --max-luminance <TID:float>
+                           Maximum luminance in candelas per square meter
+                           (cd/m┬▓).
+  --min-luminance <TID:float>
+                           Minimum luminance in candelas per square meter
+                           (cd/m┬▓).
+  --projection-type <TID:method>
+                           Projection method used (0ΓÇô3).
+  --projection-private <TID:data>
+                           Private data that only applies to a specific
+                           projection (as hex digits).
+  --projection-pose-yaw <TID:float>
+                           A yaw rotation to the projection.
+  --projection-pose-pitch <TID:float>
+                           A pitch rotation to the projection.
+  --projection-pose-roll <TID:float>
+                           A roll rotation to the projection.
+
+ Options that only apply to text subtitle tracks:
+  --sub-charset <TID:charset>
+                           Determines the charset the text subtitles are
+                           read as for the conversion to UTF-8.
+
+ Options that only apply to VobSub subtitle tracks:
+  --compression <TID:method>
+                           Sets the compression method used for the
+                           specified track ('none' or 'zlib').
+
+
+ Other options:
+  -i, --identify <file>    Print information about the source file.
+  -J <file>                This is a convenient alias for
+                           "--identification-format json --identify file".
+  -F, --identification-format <format>
+                           Set the identification results format
+                           ('text' or 'json'; default is 'text').
+  --probe-range-percentage <percent>
+                           Sets maximum size to probe for tracks in percent
+                           of the total file size for certain file types
+                           (default: 0.3).
+  -l, --list-types         Lists supported source file types.
+  --list-audio-emphasis    Lists all supported values for the
+                           '--audio-emphasis' option and their meaning.
+  --list-languages         Lists all ISO 639 languages and their
+                           ISO 639-2 codes.
+  --list-stereo-modes      Lists all supported values for the '--stereo-mode'
+                           option and their meaning.
+  --capabilities           Lists optional features mkvmerge was compiled with.
+  --priority <priority>    Set the priority mkvmerge runs with.
+  --ui-language <code>     Force the translations for 'code' to be used.
+  --command-line-charset <charset>
+                           Charset for strings on the command line
+  --output-charset <cset>  Output messages in this charset
+  -r, --redirect-output <file>
+                           Redirects all messages into this file.
+  --flush-on-close         Flushes all cached data to storage when closing
+                           a file opened for writing.
+  --abort-on-warnings      Aborts the program after the first warning is
+                           emitted.
+  --deterministic <seed>   Enables the creation of byte-identical files
+                           if the same source files with the same options
+                           and the same seed are used.
+
+  --debug <topic>          Turns on debugging output for 'topic'.
+  --engage <feature>       Turns on experimental feature 'feature'.
+  @option-file.json        Reads additional command line options from
+                           the specified JSON file (see man page).
+  -h, --help               Show this help.
+  -V, --version            Show version information.
+
+
+Please read the man page/the HTML documentation to mkvmerge. It
+explains several details in great length which are not obvious from
+this listing.

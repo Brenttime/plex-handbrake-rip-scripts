@@ -1,14 +1,23 @@
-cd "C:\Program Files (x86)\MakeMKV\"
+set-Alias makemkvcon "C:\Program Files (x86)\MakeMKV\makemkvcon.exe"
 
-$output = "E:\Video\backup\Pokemon"
+function Get-DiskName {
+    param(
+        $DiskNumber
+    )
+    $diskInfo = makemkvcon -r info disc | select-string -Pattern "DRV:$DiskNumber" 
+    $diskName = (($diskInfo -Split ',')[-2] -replace '"', "")
+    return [string] ($diskName)
+}
 
 $diskNumber = 0
+$diskName = Get-DiskName $diskNumber 
 
-# .\makemkvcon mkv disc:0 all $output
+$outputPath = "E:\Video\backup\$diskName"
 
-.\makemkvcon -r --cache=1 info disc:$diskNumber
+# Create Dir if it doesn't exist
+If(!(test-path -PathType container $outputPath))
+{
+    New-Item $outputPath -type Directory | Out-Null
+}
 
-.\makemkvcon backup --decrypt --cache=16 --noscan -r --progress=-same disc:$diskNumber $output
-
-# Location of Handbrake - should add to path
-cd C:\dev\plex # Hack, need to add handbrake to path
+makemkvcon mkv disc:$diskNumber all $outputPath --robot
